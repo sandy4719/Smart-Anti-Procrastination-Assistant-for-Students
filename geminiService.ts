@@ -1,7 +1,7 @@
-
 import { GoogleGenAI, Type } from "@google/genai";
 import { UserContext, ProductivityPlan, PerformanceData, AnalysisResult, StreakCelebration } from "./types";
 
+// Always use the injected API key from the Netlify/Vite environment
 const ai = new GoogleGenAI({ apiKey: process.env.API_KEY || '' });
 
 const SYSTEM_INSTRUCTION = `You are an AI productivity assistant designed specifically for students.
@@ -194,7 +194,9 @@ export const generateStreakCelebration = async (streak: number): Promise<StreakC
   });
 
   try {
-    return JSON.parse(response.text) as StreakCelebration;
+    const text = response.text;
+    if (!text) throw new Error("Empty response");
+    return JSON.parse(text) as StreakCelebration;
   } catch {
     return {
       encouragement: "Amazing work! You're unstoppable.",
