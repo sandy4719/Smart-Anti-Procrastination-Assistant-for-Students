@@ -5,6 +5,7 @@ export default defineConfig({
   plugins: [react()],
   define: {
     // This allows the code to access the Netlify environment variable 'API_KEY'
+    // during the build process, making it available as process.env.API_KEY.
     'process.env.API_KEY': JSON.stringify(process.env.API_KEY)
   },
   build: {
@@ -14,5 +15,9 @@ export default defineConfig({
         main: './index.html'
       }
     }
+  },
+  server: {
+    port: 3000,
+    open: true
   }
 });
